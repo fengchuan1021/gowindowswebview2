@@ -1,0 +1,6 @@
+github.com/webview/webview v0.0.0-20220303195341-ed36554a1a77 h1:tCL6hCFrDl+rrwzAQDLa6UhcvGUKy3Umu4gTFmUEE74=
+github.com/webview/webview v0.0.0-20220303195341-ed36554a1a77/go.mod h1:rpXAuuHgyEJb6kXcXldlkOjU6y4x+YcASKKXJNUhh0Y=
+github.com/yamnikov-oleg/w32 v0.0.0-20151008150751-b1984dac6e87 h1:4AabOvyPBsiASGr+wfQF3bk6BV3tR4Avu+oel4+75ME=
+github.com/yamnikov-oleg/w32 v0.0.0-20151008150751-b1984dac6e87/go.mod h1:U3J8etkUUGV7OXlvD+/ujjLW2Mf77DmvGHX5uTixqqg=
+github.com/yamnikov-oleg/wingo v0.0.0-20151008151310-5f5970bcdae8 h1:Kkc9LbncZXFl8ysnn5CqKkThpH1IMK67bfunrovML6g=
+github.com/yamnikov-oleg/wingo v0.0.0-20151008151310-5f5970bcdae8/go.mod h1:wKdiEI8klY/hXiknZy/HWWto9YjpsqSPipERrWDRwl0=
