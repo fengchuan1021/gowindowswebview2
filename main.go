@@ -2,6 +2,7 @@ package main
 
 import (
 	"fanxing/depency"
+
 	"fmt"
 	"github.com/webview/webview"
 	"github.com/yamnikov-oleg/w32"
@@ -83,11 +84,6 @@ func releasewindow() {
 }
 func movewindow(x int, y int, w int, h int) {
 	hwnd := mainwindow.GetHandle()
-	//xint, _ := strconv.Atoi(x)
-	//yint, _ := strconv.Atoi(y)
-	//wint, _ := strconv.Atoi(width)
-	//hint, _ := strconv.Atoi(height)
-	fmt.Println(x, y, w, h)
 	w32.MoveWindow(hwnd, x, y, w, h, false)
 }
 func oncreate(w *wingo.Window, url string) {
@@ -161,6 +157,7 @@ func checkhwnd(w *wingo.Window) {
 	}
 }
 func main() {
+	depency.Webviewdll
 	urlchan := make(chan string)
 	go myhttp(urlchan)
 	prefix := <-urlchan
