@@ -2,13 +2,14 @@ package main
 
 import (
 	"fanxing/depency"
-
 	"fmt"
-	"github.com/webview/webview"
+	"github.com/jchv/go-webview2"
 	"github.com/yamnikov-oleg/w32"
 	"github.com/yamnikov-oleg/wingo"
 	"net"
 	"net/http"
+	"os"
+	"path"
 	"runtime"
 	"syscall"
 	"time"
@@ -28,23 +29,24 @@ func ontrayrightclick(w *wingo.Window) {
 
 }
 
-var mainview webview.WebView
+var mainview webview2.WebView
 var mainwindow *wingo.Window
 
 func onresize(w *wingo.Window, xy wingo.Vector) {
-	if nil != mainview {
-		mainview.SetSize(xy.X, xy.Y, webview.HintNone)
-
-	}
+	//if nil != mainview {
+	//
+	//	mainview.Resize()
+	//}
 }
 func realopenurl(url string) {
 	runtime.LockOSThread()
-	w := webview.New(true)
-	defer w.Destroy()
-	w.Navigate(url)
-	w.Run()
+	//w := mainview.New(true)
+	//defer w.Destroy()
+	//w.Navigate(url)
+	//w.Run()
 
 }
+
 func openurl(url string) int {
 	fmt.Println(url)
 	go realopenurl(url)
@@ -88,19 +90,40 @@ func movewindow(x int, y int, w int, h int) {
 }
 func oncreate(w *wingo.Window, url string) {
 	runtime.LockOSThread()
-	hand := w.GetHandle()
-	mainview = webview.NewWindow(true, unsafe.Pointer(&hand))
+
+	mainview = webview2.NewWithOptions(webview2.WebViewOptions{
+		DataPath:  path.Join(depency.Rootdir, "mainv"),
+		Debug:     true,
+		AutoFocus: true,
+		WindowOptions: webview2.WindowOptions{
+			Title:        "Minimal webview example",
+			Parentwindow: uintptr(w.GetHandle()),
+		},
+	})
+	//chromium.MessageCallback = w.msgcb
+	//mainview.Debug = true
+	//mainview.DataPath = "f:\\test"
+	//mainview.SetPermission(edge.CoreWebView2PermissionKindClipboardRead, edge.CoreWebView2PermissionStateAllow)
+	//mainview.Embed(uintptr(mainwindow.GetHandle()))
+	//mainview.Navigate("https://www.baidu.com/")
+	//mainview.Focus()
+	//mainview.Resize()
+	////mainwindow.Show()
+	//mainview.NotifyParentWindowPositionChanged()
+	//mainview.Show()
 
 	//mainview=&wv
 	//mainview.Navigate(url + "/assets/index.html")
 	mainview.Navigate("http://127.0.0.1:8080/")
-	mainview.Bind("open_url", openurl)
-	mainview.Bind("capthurewindow", capthurewindow)
-	mainview.Bind("releasewindow", releasewindow)
+	//mainview.Bind("open_url", openurl)
+	//mainview.Bind("capthurewindow", capthurewindow)
+	//mainview.Bind("releasewindow", releasewindow)
 	mainview.Bind("movewindow", movewindow)
 	mainview.Run()
+	//mainview.
+	//mainview.Run()
 
-	defer mainview.Destroy()
+	//defer mainview.Destroy()
 }
 
 var traymenu *wingo.Menu
@@ -157,7 +180,8 @@ func checkhwnd(w *wingo.Window) {
 	}
 }
 func main() {
-	depency.Webviewdll
+	//depency.Webviewdll
+	os.Setenv("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS", "--disable-web-security")
 	urlchan := make(chan string)
 	go myhttp(urlchan)
 	prefix := <-urlchan
@@ -179,11 +203,11 @@ func main() {
 	w32.SetWindowLong(mainwindow.GetHandle(), w32.GWL_STYLE, uint32(dw))
 
 	//取消边框内的边缘，也就是取消3D效果
-	//dw := w32.GetWindowLong(w.GetHandle(), w32.GWL_EXSTYLE)
-	//dw = dw & ^w32.WS_EX_DLGMODALFRAME
-	//dw = dw & ^w32.WS_EX_CLIENTEDGE
-	//dw = dw & ^w32.WS_EX_WINDOWEDGE
-	//w32.SetWindowLong(w.GetHandle(), w32.GWL_EXSTYLE, uint32(dw))
+	dw = w32.GetWindowLong(mainwindow.GetHandle(), w32.GWL_EXSTYLE)
+	dw = dw & ^w32.WS_EX_DLGMODALFRAME
+	dw = dw & ^w32.WS_EX_CLIENTEDGE
+	dw = dw & ^w32.WS_EX_WINDOWEDGE
+	w32.SetWindowLong(mainwindow.GetHandle(), w32.GWL_EXSTYLE, uint32(dw))
 
 	//w.OnCreate=oncreate
 	icon := wingo.LoadIcon(101)

@@ -16,6 +16,7 @@ var Loaderdll []byte
 
 //go:embed webview.dll
 var Webviewdll []byte
+var Rootdir string
 
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
@@ -36,6 +37,7 @@ func init() {
 		os.MkdirAll(mainpath, 0x777)
 	}
 	os.Chdir(mainpath)
+	Rootdir = mainpath
 	//if ret, _ := PathExists(path.Join(mainpath, "WebView2Loader.dll")); !ret {
 	//	ioutil.WriteFile(path.Join(mainpath, "WebView2Loader.dll"), loader, 0x777)
 	//}
