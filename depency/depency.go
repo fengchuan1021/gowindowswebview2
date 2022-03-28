@@ -36,8 +36,12 @@ func init() {
 	if ret, _ := PathExists(mainpath); !ret {
 		os.MkdirAll(mainpath, 0x777)
 	}
+	if ret, _ := PathExists(path.Join(mainpath, "data")); !ret {
+		os.MkdirAll(path.Join(mainpath, "data"), 0x777)
+	}
 	os.Chdir(mainpath)
 	Rootdir = mainpath
+	fmt.Println(Rootdir)
 	//if ret, _ := PathExists(path.Join(mainpath, "WebView2Loader.dll")); !ret {
 	//	ioutil.WriteFile(path.Join(mainpath, "WebView2Loader.dll"), loader, 0x777)
 	//}
